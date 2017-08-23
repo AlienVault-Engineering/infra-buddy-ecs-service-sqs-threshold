@@ -1,0 +1,8 @@
+{
+  "SQS_THRESHOLD": {
+    "type": "property",
+    "key": "SQS_THRESHOLD",
+    "default": 10
+  }
+}
+  

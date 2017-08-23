@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "Environment",
+        "ParameterValue": "${ENVIRONMENT}"
+    },
+    {
+        "ParameterKey": "ServiceStack",
+        "ParameterValue": "${ECS_SERVICE_STACK_NAME}"
+    },
+    {
+        "ParameterKey": "Threshold",
+        "ParameterValue": "${SQS_THRESHOLD}"
+    },
+    {
+        "ParameterKey": "QueueName",
+        "ParameterValue": "${SQS_QUEUENAME}"
+    }
+]

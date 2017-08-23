@@ -1,0 +1,63 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "",
+  "Parameters":{
+      "Environment": {
+          "Description": "The environment parameter for the docker container",
+          "Type": "String"
+        },
+      "ServiceStack": {
+        "Description": "Service stack name to create policy for",
+        "Type": "String"
+      },
+      "Threshold": {
+        "Description": "The number of SQS messages visible to start scaling",
+        "Type": "Number"
+      },
+      "QueueName": {
+        "Description": "The SQS queue to monitor",
+        "Type": "String"
+      }
+  },
+  "Resources": {
+    "SQSThresholdAlarmScaleUp":{
+             "Type":"AWS::CloudWatch::Alarm",
+             "Properties":{
+               "EvaluationPeriods":"1",
+               "Statistic":"Sum",
+               "Threshold": { "Ref": "Threshold"},
+               "AlarmDescription":"Alarm if our SQS has too many visible messages.",
+               "Period":"60",
+               "AlarmActions":[
+                 {"Fn::ImportValue" : {"Fn::Sub" : "${ServiceStack}-autoscale-ServiceScaleUpPolicy"}}
+               ],
+               "Namespace":"AWS/SQS",
+               "Dimensions":[{
+                         "Name": "QueueName",
+                         "Value" : { "Ref": "QueueName" }
+                       }],
+               "ComparisonOperator":"GreaterThanThreshold",
+               "MetricName":"ApproximateNumberOfMessagesVisible"
+             }
+           },"SQSThresholdAlarmScaleDown":{
+             "Type":"AWS::CloudWatch::Alarm",
+             "Properties":{
+               "EvaluationPeriods":"1",
+               "Statistic":"Sum",
+               "Threshold": "0",
+               "AlarmDescription":"Alarm if our SQS has no visible messages.",
+               "Period":"60",
+               "AlarmActions":[
+                 {"Fn::ImportValue" : {"Fn::Sub" : "${ServiceStack}-autoscale-ServiceScaleDownPolicy"}}
+               ],
+               "Namespace":"AWS/SQS",
+               "Dimensions":[{
+                         "Name": "QueueName",
+                         "Value" : { "Ref": "QueueName" }
+                       }],
+               "ComparisonOperator":"LessThanOrEqualToThreshold",
+               "MetricName":"ApproximateNumberOfMessagesVisible"
+             }
+           }
+  }
+}
