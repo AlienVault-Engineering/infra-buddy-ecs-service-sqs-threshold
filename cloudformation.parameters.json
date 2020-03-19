@@ -4,6 +4,10 @@
         "ParameterValue": "${ENVIRONMENT}"
     },
     {
+        "ParameterKey": "Application",
+        "ParameterValue": "${APPLICATION}"
+    },
+    {
         "ParameterKey": "ServiceStack",
         "ParameterValue": "${ECS_SERVICE_STACK_NAME}"
     },
