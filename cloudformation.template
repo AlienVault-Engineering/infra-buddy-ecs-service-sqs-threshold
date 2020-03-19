@@ -6,6 +6,10 @@
           "Description": "The environment parameter for the docker container",
           "Type": "String"
         },
+      "Application": {
+        "Description": "Logical name (Application) for this CF stack",
+        "Type": "String"
+      },
       "ServiceStack": {
         "Description": "Service stack name to create policy for",
         "Type": "String"
