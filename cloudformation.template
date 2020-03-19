@@ -33,9 +33,11 @@
                ],
                "Namespace":"AWS/SQS",
                "Dimensions":[{
-                         "Name": "QueueName",
-                         "Value" : { "Ref": "QueueName" }
-                       }],
+                 "Name": "QueueName",
+                 "Value" : {
+                   "Fn::Sub": "${Environment}-${Application}-${QueueName}"
+                 }
+               }],
                "ComparisonOperator":"GreaterThanThreshold",
                "MetricName":"ApproximateNumberOfMessagesVisible"
              }
@@ -52,9 +54,11 @@
                ],
                "Namespace":"AWS/SQS",
                "Dimensions":[{
-                         "Name": "QueueName",
-                         "Value" : { "Ref": "QueueName" }
-                       }],
+                 "Name": "QueueName",
+                 "Value" : {
+                   "Fn::Sub": "${Environment}-${Application}-${QueueName}"
+                 }
+               }],
                "ComparisonOperator":"LessThanOrEqualToThreshold",
                "MetricName":"ApproximateNumberOfMessagesVisible"
              }
